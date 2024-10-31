@@ -1,18 +1,20 @@
-class ReminderRepository{
-    constructor(){
-        this.reminders = [];
+const Reminder = require('./db/models/reminder');
+
+class ReminderRepository {
+    async save(reminder) {
+        return await Reminder.create({
+            time: reminder.time,
+            message: reminder.message,
+            userId: reminder.userId,
+        });
     }
 
-    async save(reminder){
-        this.reminders.push(reminder);
+    async searchAll() {
+        return await Reminder.findAll();
     }
 
-    async searchAll(){
-        return this.reminders;
-    }
-
-    async remove(reminder){
-        this.reminders = this.reminders.filter(r => r !== reminder);
+    async remove(reminder) {
+        await Reminder.destroy({ where: { id: reminder.id } });
     }
 }
 
