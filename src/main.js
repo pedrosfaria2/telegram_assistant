@@ -33,7 +33,9 @@ sequelize.sync().then(() => {
 
         try {
             if (!moment(dateTime, 'YYYY-MM-DD HH:mm', true).isValid()) {
-                    return ctx.reply('Invalid time format. Please use YYYY-MM-DD HH:MM');
+                return ctx.reply(
+                    'Invalid time format. Please use YYYY-MM-DD HH:MM'
+                );
             }
 
             const reminder = await reminderService.createReminder(
