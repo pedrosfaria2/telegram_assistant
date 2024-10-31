@@ -75,3 +75,5 @@ package-lock.json
 # Avoid tracking run configurations and tasks
 .idea/runConfigurations/
 .idea/tasks/
+#Database
+*.db
