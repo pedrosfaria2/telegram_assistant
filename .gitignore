@@ -35,7 +35,6 @@ coverage/
 *.iml
 *.sublime-workspace
 *.sublime-project
-*.iml
 
 # Sistema operacional
 .DS_Store
@@ -51,29 +50,5 @@ Thumbs.db
 yarn.lock
 package-lock.json
 
-# IDE (WebStorm/IntelliJ)
-.idea/
-*.iml
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/dictionaries
-.idea/libraries
-.idea/jsLibraryMappings.xml
-.idea/vcs.xml
-.idea/npm.xml
-.idea/modules.xml
-.idea/webServers.xml
-.idea/gradle.xml
-
-# Editor-based settings (opcional)
-.idea/*.shelf/
-.idea/shelf/
-
-# Avoid tracking of local history files
-.idea/localHistory/
-
-# Avoid tracking run configurations and tasks
-.idea/runConfigurations/
-.idea/tasks/
 #Database
 *.db

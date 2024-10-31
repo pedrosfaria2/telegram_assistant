@@ -3,7 +3,7 @@ const settings = require('../../settings');
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
-    storage: settings.databaseUrl
+    storage: settings.databaseUrl,
 });
 
 module.exports = sequelize;

@@ -1,27 +1,28 @@
-class Reminder{
-    constructor( { time, message, userId} ) {
-        if (!this.validateTime(time)){
-            throw new Error("Invalid time");
+const moment = require('moment');
+
+class Reminder {
+    constructor({ time, message, userId }) {
+        if (!this.validateTime(time)) {
+            throw new Error('Invalid time');
         }
         this.time = time;
         this.message = message;
         this.userId = userId;
     }
 
-    validateTime(time){
-        const regex = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
-        return regex.test(time);
+    validateTime(time) {
+        return moment(time, 'YYYY-MM-DD HH:mm', true).isValid();
     }
 
-    getTime(){
+    getTime() {
         return this.time;
     }
 
-    getMessage(){
+    getMessage() {
         return this.message;
     }
 
-    getUserId(){
+    getUserId() {
         return this.userId;
     }
 }
