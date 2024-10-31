@@ -1,38 +1,43 @@
 const { Telegraf } = require('telegraf');
 const settings = require('./settings');
-const ReminderRepository = require("./infra/reminder_repository");
-const ReminderService = require("./app/reminder_service");
-const SchedulerService = require("./app/scheduler_service");
+const ReminderRepository = require('./infra/reminder_repository');
+const ReminderService = require('./app/reminder_service');
+const SchedulerService = require('./app/scheduler_service');
+const sequelize = require('./infra/db');
 
 const bot = new Telegraf(settings.telegramToken);
-
 const reminderRepository = new ReminderRepository();
 const reminderService = new ReminderService(reminderRepository);
 const schedulerService = new SchedulerService(reminderService, bot);
 
-bot.start((ctx) => ctx.reply("Welcome! Use /reminder to create a reminder."));
-bot.help((ctx) => ctx.reply("Available commands: /reminder HH:MM your message"));
+sequelize.sync().then(() => {
+    console.log("Database synchronized");
 
-bot.command('reminder', async (ctx) => {
-    const [time, ...messageParts] = ctx.message.text.split(' ').slice(1);
-    const message = messageParts.join(' ');
-    const userId = ctx.message.from.id;
+    bot.start((ctx) => ctx.reply("Welcome! Use /reminder to create a reminder."));
+    bot.help((ctx) => ctx.reply("Available commands: /reminder HH:MM your message"));
 
-    try{
-        const reminder = await reminderService.createReminder(time, message, userId);
-        ctx.reply(`Reminder created for ${reminder.getTime()}: ${reminder.getMessage()}`);
-    } catch(error){
-        ctx.reply(`Error creating reminder: ${error}`);
-    }
-});
+    bot.command('reminder', async (ctx) => {
+        const [time, ...messageParts] = ctx.message.text.split(' ').slice(1);
+        const message = messageParts.join(' ');
+        const userId = ctx.message.from.id;
 
-bot.launch()
-    .then(r => {
-        console.log("Bot successfully launched:", r);
-        schedulerService.start();
-    })
-    .catch(err => {
-        console.error("Error launching the bot:", err);
+        try {
+            const reminder = await reminderService.createReminder(time, message, userId);
+            ctx.reply(`Reminder created for ${reminder.getTime()}: ${reminder.getMessage()}`);
+        } catch (error) {
+            ctx.reply(`Error creating reminder: ${error.message}`);
+        }
     });
 
-console.log("Bot started");
+    schedulerService.start();
+
+    bot.launch()
+        .then(() => {
+            console.log("Bot successfully launched");
+        })
+        .catch(err => {
+            console.error("Error launching the bot:", err);
+        });
+
+    console.log("Bot started");
+});
