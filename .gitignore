@@ -1,0 +1,77 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependências do Node
+node_
+modules/
+.pnpm/
+node_modules/
+
+# Build output
+dist/
+build/
+tmp/
+temp/
+out/
+
+# Arquivos de ambiente
+.env
+.env.*.local
+!.env.example
+
+# Cache e intermediários do pacote
+.cache/
+.nyc_output/
+coverage/
+*.tsbuildinfo
+
+# Diretórios de teste locais
+.vscode/
+.idea/
+*.iml
+*.sublime-workspace
+*.sublime-project
+*.iml
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Ignorar arquivos de deploy (caso use serviços de nuvem como Heroku)
+.heroku/
+.next/
+.vercel/
+.now/
+
+# Arquivos de dependência de pacotes do yarn ou npm
+yarn.lock
+package-lock.json
+
+# IDE (WebStorm/IntelliJ)
+.idea/
+*.iml
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+.idea/libraries
+.idea/jsLibraryMappings.xml
+.idea/vcs.xml
+.idea/npm.xml
+.idea/modules.xml
+.idea/webServers.xml
+.idea/gradle.xml
+
+# Editor-based settings (opcional)
+.idea/*.shelf/
+.idea/shelf/
+
+# Avoid tracking of local history files
+.idea/localHistory/
+
+# Avoid tracking run configurations and tasks
+.idea/runConfigurations/
+.idea/tasks/
