@@ -2,11 +2,13 @@ const { Telegraf } = require('telegraf');
 const settings = require('./settings');
 const ReminderRepository = require("./infra/reminder_repository");
 const ReminderService = require("./app/reminder_service");
+const SchedulerService = require("./app/scheduler_service");
 
 const bot = new Telegraf(settings.telegramToken);
 
 const reminderRepository = new ReminderRepository();
 const reminderService = new ReminderService(reminderRepository);
+const schedulerService = new SchedulerService(reminderService, bot);
 
 bot.start((ctx) => ctx.reply("Welcome! Use /reminder to create a reminder."));
 bot.help((ctx) => ctx.reply("Available commands: /reminder HH:MM your message"));
@@ -27,6 +29,7 @@ bot.command('reminder', async (ctx) => {
 bot.launch()
     .then(r => {
         console.log("Bot successfully launched:", r);
+        schedulerService.start();
     })
     .catch(err => {
         console.error("Error launching the bot:", err);
