@@ -29,7 +29,9 @@ const Logger = require('./seedwork/logger');
         await bot.launch();
         Logger.info('Bot successfully launched');
     } catch (error) {
-        Logger.error(`Failed to initialize application: ${error.message}`, { stack: error.stack });
+        Logger.error(`Failed to initialize application: ${error.message}`, {
+            stack: error.stack,
+        });
         process.exit(1);
     }
 })();

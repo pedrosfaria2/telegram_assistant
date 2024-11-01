@@ -13,9 +13,7 @@ const Logger = createLogger({
         align(),
         customFormat
     ),
-    transports: [
-        new transports.Console()
-    ]
+    transports: [new transports.Console()],
 });
 
 module.exports = Logger;
