@@ -1,6 +1,7 @@
 const StartHandler = require('./handlers/start_handler');
 const HelpHandler = require('./handlers/help_handler');
 const ReminderHandler = require('./handlers/reminder_handler');
+const WhatsForTheDayHandler = require('./handlers/whats_for_the_day_handler');
 
 class BotBuilder {
     constructor(bot, reminderService, logger) {
@@ -16,6 +17,11 @@ class BotBuilder {
             new StartHandler(this.bot, this.logger),
             new HelpHandler(this.bot, this.logger),
             new ReminderHandler(this.bot, this.reminderService, this.logger),
+            new WhatsForTheDayHandler(
+                this.bot,
+                this.reminderService,
+                this.logger
+            ),
         ];
 
         handlers.forEach(handler => {

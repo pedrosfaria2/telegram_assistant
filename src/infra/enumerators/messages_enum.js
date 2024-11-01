@@ -17,17 +17,27 @@ const MessageEnum = Object.freeze({
         'Let’s get started! 😊',
     START_ERROR:
         'Oops! Something went wrong while processing the start command. Please try again later.',
-    HELP_MESSAGE:
-        'Hello! 👋 Here are some commands you can use:\n\n' +
+    HELP_INTRO: 'Hello! 👋 Here are some commands you can use:\n\n',
+    HELP_REMINDER:
         '📅 *To create a reminder:*\n' +
         '`/reminder YYYY-MM-DD HH:MM [your message]`\n' +
-        'For example: `/reminder 2024-11-01 09:00 Coffee meeting with client`\n\n' +
-        '⚙️ *More useful commands coming soon!*\n\n' +
-        "If you need help, I'm here! 😊",
+        'For example: `/reminder 2024-11-01 09:00 Coffee meeting with client`\n\n',
+    HELP_WHATS_FOR_THE_DAY:
+        "🔍 *To see what's on your schedule for today:*\n" +
+        '`/whats_for_the_day`\n\n',
+    HELP_OTHER:
+        'If you need more assistance, feel free to ask! 😊\n\n' +
+        '⚙️ *More useful commands coming soon!*',
     HELP_ERROR:
         'Oops! Something went wrong while processing the help command. Please try again in a moment!',
     REMINDER_ALERT:
         '⏰ *Reminder Alert!* \n\n📅 *Date & Time:* {{date}} \n📝 *Message:* "{{message}}"\n\nLet\'s make the most of this reminder! 💪',
+    NO_REMINDERS_FOR_TODAY:
+        "You have no reminders set for today. You're all clear! 😊",
+    REMINDER_LIST_HEADER: "Here's what's on your agenda for today:\n\n",
+    ERROR_FETCHING_REMINDERS:
+        "Oops! Something went wrong while retrieving today's reminders. Please try again later.",
+    REMINDER_TIME_FORMAT: (time, message) => `🕒 *${time}* - ${message}`,
 });
 
 module.exports = MessageEnum;

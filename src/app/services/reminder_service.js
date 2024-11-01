@@ -38,6 +38,35 @@ class ReminderService {
         this.logger.info(`Fetched ${reminders.length} pending reminders`);
         return reminders;
     }
+
+    async getIntervalReminders(userId, startDate, endDate) {
+        try {
+            const reminders = await this.reminderRepository.findByDateRange(
+                userId,
+                startDate,
+                endDate
+            );
+
+            if (reminders.length === 0) {
+                this.logger.info(
+                    `No reminders found for user ${userId} within the interval.`
+                );
+                return [];
+            }
+
+            this.logger.info(
+                `Found ${reminders.length} reminders for user ${userId} within the interval.`
+            );
+            return reminders;
+        } catch (error) {
+            this.logger.error(
+                `Failed to fetch reminders for user ${userId} within the interval: ${error.message}`
+            );
+            throw new Error(
+                `Unable to retrieve reminders within the interval.`
+            );
+        }
+    }
 }
 
 module.exports = ReminderService;
