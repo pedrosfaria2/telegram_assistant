@@ -67,6 +67,9 @@ class ReminderService {
             );
         }
     }
+    async getAllOpenReminders(userId) {
+        return await this.reminderRepository.searchOpenReminders(userId);
+    }
 }
 
 module.exports = ReminderService;

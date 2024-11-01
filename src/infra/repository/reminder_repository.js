@@ -1,6 +1,7 @@
 const ReminderModel = require('../db/models/reminder');
 const DatabaseError = require('../../infra/errors/database_error');
 const { Op } = require('sequelize');
+const moment = require('moment');
 
 class ReminderRepository {
     async save(reminder) {
@@ -40,6 +41,24 @@ class ReminderRepository {
         } catch (error) {
             throw new DatabaseError(
                 `Failed to fetch reminders within the specified range: ${error.message}`
+            );
+        }
+    }
+
+    async searchOpenReminders(userId) {
+        try {
+            return await ReminderModel.findAll({
+                where: {
+                    userId,
+                    time: {
+                        [Op.gte]: moment().toISOString(),
+                    },
+                },
+                order: [['time', 'ASC']],
+            });
+        } catch (error) {
+            throw new DatabaseError(
+                `Failed to fetch open reminders: ${error.message}`
             );
         }
     }

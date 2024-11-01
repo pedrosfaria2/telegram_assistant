@@ -13,6 +13,7 @@ class HelpHandler {
                     MessageEnum.HELP_INTRO +
                     MessageEnum.HELP_REMINDER +
                     MessageEnum.HELP_WHATS_FOR_THE_DAY +
+                    MessageEnum.HELP_OPEN_REMINDERS +
                     MessageEnum.HELP_OTHER;
 
                 await ctx.reply(helpMessage, { parse_mode: 'Markdown' });

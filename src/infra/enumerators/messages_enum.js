@@ -45,6 +45,14 @@ const MessageEnum = Object.freeze({
         'You have no reminders set for that date. Enjoy the free time! 😊',
     REMINDER_LIST_SPECIFIC_DAY_HEADER:
         "Here's what's on your agenda for *{{date}}*:\n\n",
+    NO_OPEN_REMINDERS:
+        "You have no upcoming reminders. You're all caught up! 😊",
+    ERROR_FETCHING_OPEN_REMINDERS:
+        'Oops! Something went wrong while retrieving your open reminders. Please try again later.',
+    HELP_OPEN_REMINDERS:
+        '📅 *To view all open reminders:*\n' +
+        '`/open_reminders`\n' +
+        'This will show a list of all your upcoming reminders, organized by date.\n\n',
 });
 
 module.exports = MessageEnum;
