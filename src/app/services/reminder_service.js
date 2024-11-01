@@ -1,4 +1,4 @@
-const Reminder = require('../domain/reminder');
+const Reminder = require('../../domain/entities/reminder');
 
 class ReminderService {
     constructor(reminderRepository) {

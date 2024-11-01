@@ -1,4 +1,4 @@
-const Reminder = require('./db/models/reminder');
+const Reminder = require('../db/models/reminder');
 
 class ReminderRepository {
     async save(reminder) {
