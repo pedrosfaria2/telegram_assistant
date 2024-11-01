@@ -48,7 +48,7 @@ Planned improvements include additional functionalities that will help shape thi
 
     ```bash
     git clone https://github.com/pedrosfaria2/telegram_assistant.git
-    cd personal-assistant-bot
+    cd telegram_assistant
     ```
 
 2. **Install Dependencies**:
