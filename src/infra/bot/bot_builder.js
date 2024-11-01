@@ -3,19 +3,35 @@ const HelpHandler = require('./handlers/help_handler');
 const ReminderHandler = require('./handlers/reminder_handler');
 
 class BotBuilder {
-    constructor(bot, reminderService) {
+    constructor(bot, reminderService, logger) {
         this.bot = bot;
         this.reminderService = reminderService;
+        this.logger = logger;
     }
 
     build() {
+        this.logger.info('Starting to build bot handlers');
+
         const handlers = [
-            new StartHandler(this.bot),
-            new HelpHandler(this.bot),
-            new ReminderHandler(this.bot, this.reminderService),
+            new StartHandler(this.bot, this.logger),
+            new HelpHandler(this.bot, this.logger),
+            new ReminderHandler(this.bot, this.reminderService, this.logger),
         ];
 
-        handlers.forEach(handler => handler.register());
+        handlers.forEach(handler => {
+            try {
+                handler.register();
+                this.logger.info(
+                    `${handler.constructor.name} registered successfully`
+                );
+            } catch (error) {
+                this.logger.error(
+                    `Error registering ${handler.constructor.name}: ${error.message}`
+                );
+            }
+        });
+
+        this.logger.info('Bot handlers built successfully');
     }
 }
 

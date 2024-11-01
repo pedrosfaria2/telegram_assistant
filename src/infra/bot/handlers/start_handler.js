@@ -1,12 +1,26 @@
 class StartHandler {
-    constructor(bot) {
+    constructor(bot, logger) {
         this.bot = bot;
+        this.logger = logger;
     }
 
     register() {
-        this.bot.start(ctx =>
-            ctx.reply('Welcome! Use /help for available commands.')
-        );
+        this.bot.start(async ctx => {
+            try {
+                await ctx.reply('Welcome! Use /help for available commands.');
+                this.logger.info(
+                    'Start command executed successfully for user:',
+                    ctx.from.id
+                );
+            } catch (error) {
+                this.logger.error(
+                    `Error executing start command for user ${ctx.from.id}: ${error.message}`
+                );
+                await ctx.reply(
+                    'An error occurred while processing the start command.'
+                );
+            }
+        });
     }
 }
 

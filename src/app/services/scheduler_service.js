@@ -2,43 +2,58 @@ const cron = require('node-cron');
 const moment = require('moment-timezone');
 
 class SchedulerService {
-    constructor(reminderService, bot) {
+    constructor(reminderService, bot, logger) {
         this.reminderService = reminderService;
         this.bot = bot;
-        console.log('Scheduler service created');
+        this.logger = logger;
+        this.logger.info('Scheduler service created');
     }
 
     start() {
         cron.schedule('* * * * *', async () => {
-            console.log('Cron job triggered');
+            this.logger.info('Cron job triggered');
             await this.checkAndSendReminders();
         });
-        console.log('Scheduler started');
+        this.logger.info('Scheduler started');
     }
 
     async checkAndSendReminders() {
-        console.log('Checking and sending reminders');
+        this.logger.info('Checking and sending reminders');
 
-        const currentTime = moment()
-            .tz('America/Sao_Paulo')
-            .format('YYYY-MM-DD HH:mm');
+        try {
+            const currentTime = moment()
+                .tz('America/Sao_Paulo')
+                .format('YYYY-MM-DD HH:mm');
+            const reminders =
+                await this.reminderService.searchPendingReminders();
 
-        const reminders = await this.reminderService.searchPendingReminders();
-        for (const reminder of reminders) {
-            const reminderTime = moment(reminder.time).format(
-                'YYYY-MM-DD HH:mm'
-            );
+            for (const reminder of reminders) {
+                try {
+                    const reminderTime = moment(reminder.time).format(
+                        'YYYY-MM-DD HH:mm'
+                    );
 
-            if (reminderTime === currentTime) {
-                console.log(
-                    `Sending reminder to user ${reminder.userId}: ${reminder.message}`
-                );
-                await this.bot.telegram.sendMessage(
-                    reminder.userId,
-                    `Reminder: ${reminder.message}`
-                );
-                await this.reminderService.removeReminder(reminder);
+                    if (reminderTime === currentTime) {
+                        this.logger.info(
+                            `Sending reminder to user ${reminder.userId}: ${reminder.message}`
+                        );
+                        await this.bot.telegram.sendMessage(
+                            reminder.userId,
+                            `Reminder: ${reminder.message}`
+                        );
+                        await this.reminderService.removeReminder(reminder);
+                        this.logger.info(
+                            `Reminder sent and removed for user ${reminder.userId}`
+                        );
+                    }
+                } catch (sendError) {
+                    this.logger.error(
+                        `Failed to send/remove reminder for user ${reminder.userId}: ${sendError.message}`
+                    );
+                }
             }
+        } catch (error) {
+            this.logger.error(`Error checking reminders: ${error.message}`);
         }
     }
 }

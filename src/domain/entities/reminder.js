@@ -1,13 +1,25 @@
 const moment = require('moment');
+const InvalidReminderTimeError = require('../../infra/errors/invalid_time_reminder_time_error');
 
 class Reminder {
     constructor({ time, message, userId }) {
         if (!this.validateTime(time)) {
-            throw new Error('Invalid time');
+            throw new InvalidReminderTimeError(
+                'Invalid time format for Reminder'
+            );
         }
-        this.time = time;
-        this.message = message;
-        this.userId = userId;
+        if (!message || typeof message !== 'string' || message.trim() === '') {
+            throw new Error(
+                'Message is required and must be a non-empty string'
+            );
+        }
+        if (!userId || typeof userId !== 'number') {
+            throw new Error('User ID is required and must be a number');
+        }
+
+        this._time = time;
+        this._message = message;
+        this._userId = userId;
     }
 
     validateTime(time) {
@@ -15,15 +27,15 @@ class Reminder {
     }
 
     getTime() {
-        return this.time;
+        return this._time;
     }
 
     getMessage() {
-        return this.message;
+        return this._message;
     }
 
     getUserId() {
-        return this.userId;
+        return this._userId;
     }
 }
 

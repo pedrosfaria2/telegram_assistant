@@ -3,33 +3,34 @@ const settings = require('./settings');
 
 const ReminderService = require('./app/services/reminder_service');
 const SchedulerService = require('./app/services/scheduler_service');
-const sequelize = require('./infra/db');
-
+const { initializeDatabase } = require('./infra/db/index');
 const ReminderRepository = require('./infra/repository/reminder_repository');
 const BotBuilder = require('./infra/bot/bot_builder');
 
 (async () => {
-    const bot = new Telegraf(settings.telegramToken);
+    try {
+        await initializeDatabase();
 
-    const reminderRepository = new ReminderRepository();
-    const reminderService = new ReminderService(reminderRepository);
-    const schedulerService = new SchedulerService(reminderService, bot);
+        const logger = console;
 
-    const botBuilder = new BotBuilder(bot, reminderService);
-    botBuilder.build();
+        const bot = new Telegraf(settings.telegramToken);
+        const reminderRepository = new ReminderRepository();
+        const reminderService = new ReminderService(reminderRepository, logger);
+        const schedulerService = new SchedulerService(
+            reminderService,
+            bot,
+            logger
+        );
 
-    await sequelize.sync();
-    console.log('Database synchronized');
+        const botBuilder = new BotBuilder(bot, reminderService, logger);
+        botBuilder.build();
 
-    schedulerService.start();
+        schedulerService.start();
 
-    bot.launch()
-        .then(() => {
-            console.log('Bot successfully launched');
-        })
-        .catch(err => {
-            console.error('Error launching the bot:', err);
-        });
-
-    console.log('Bot started');
+        await bot.launch();
+        console.log('Bot successfully launched');
+    } catch (error) {
+        console.error('Failed to initialize application:', error.message);
+        process.exit(1);
+    }
 })();
