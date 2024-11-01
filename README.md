@@ -35,7 +35,7 @@ DATABASE_URL=./reminders.db
 ### Current Features
 
 -   **Reminder**: Users can set reminders for specific dates and times using the `/reminder` command.
-- **What's for the day**: Users can see their agenda for the day using `/whats_for_the_day` command.
+-   **What's for the day**: Users can see their agenda for the day using `/whats_for_the_day` command.
 
 ### Planned Features
 

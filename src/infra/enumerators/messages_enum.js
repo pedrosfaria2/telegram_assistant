@@ -23,8 +23,8 @@ const MessageEnum = Object.freeze({
         '`/reminder YYYY-MM-DD HH:MM [your message]`\n' +
         'For example: `/reminder 2024-11-01 09:00 Coffee meeting with client`\n\n',
     HELP_WHATS_FOR_THE_DAY:
-        "🔍 *To see what's on your schedule for today:*\n" +
-        '`/whats_for_the_day`\n\n',
+        '📅 *To view reminders for today:*\n`/whats_for_day`\n' +
+        'Or specify a date: `/whats_for_day YYYY-MM-DD`\n\n',
     HELP_OTHER:
         'If you need more assistance, feel free to ask! 😊\n\n' +
         '⚙️ *More useful commands coming soon!*',
@@ -38,6 +38,13 @@ const MessageEnum = Object.freeze({
     ERROR_FETCHING_REMINDERS:
         "Oops! Something went wrong while retrieving today's reminders. Please try again later.",
     REMINDER_TIME_FORMAT: (time, message) => `🕒 *${time}* - ${message}`,
+    WHATS_FOR_SPECIFIC_DAY_USAGE:
+        'To check reminders for a specific day, please use:\n`/whats_for_day YYYY-MM-DD`\n\n' +
+        'For example:\n`/whats_for_day 2024-11-01`',
+    NO_REMINDERS_FOR_SPECIFIC_DAY:
+        'You have no reminders set for that date. Enjoy the free time! 😊',
+    REMINDER_LIST_SPECIFIC_DAY_HEADER:
+        "Here's what's on your agenda for *{{date}}*:\n\n",
 });
 
 module.exports = MessageEnum;

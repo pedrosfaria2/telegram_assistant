@@ -1,5 +1,5 @@
 const moment = require('moment');
-const Messages = require('../../enumerators/messages_enum');
+const MessageEnum = require('../../enumerators/messages_enum');
 
 class WhatsForTheDayHandler {
     constructor(bot, reminderService, logger) {
@@ -9,16 +9,31 @@ class WhatsForTheDayHandler {
     }
 
     register() {
-        this.bot.command(
-            'whats_for_the_day',
-            this.handleWhatsForTheDay.bind(this)
-        );
+        this.bot.command('whats_for_day', this.handleWhatsForTheDay.bind(this));
     }
 
     async handleWhatsForTheDay(ctx) {
+        const args = ctx.message.text.split(' ').slice(1);
         const userId = ctx.message.from.id;
-        const startOfDay = moment().startOf('day').toISOString();
-        const endOfDay = moment().endOf('day').toISOString();
+        let date;
+
+        if (args.length === 0 || !args[0]) {
+            date = moment();
+        } else {
+            date = moment(String(args[0]), 'YYYY-MM-DD', true);
+            if (!date.isValid()) {
+                await ctx.reply(MessageEnum.WHATS_FOR_SPECIFIC_DAY_USAGE, {
+                    parse_mode: 'Markdown',
+                });
+                this.logger.warn(
+                    `Invalid date format provided by user ${userId}: ${args[0]}`
+                );
+                return;
+            }
+        }
+
+        const startOfDay = date.startOf('day').toISOString();
+        const endOfDay = date.endOf('day').toISOString();
 
         try {
             const reminders = await this.reminderService.getIntervalReminders(
@@ -28,31 +43,39 @@ class WhatsForTheDayHandler {
             );
 
             if (reminders.length === 0) {
-                await ctx.reply(Messages.NO_REMINDERS_FOR_TODAY);
-                this.logger.info(`No reminders to display for user ${userId}`);
+                await ctx.reply(MessageEnum.NO_REMINDERS_FOR_SPECIFIC_DAY, {
+                    parse_mode: 'Markdown',
+                });
+                this.logger.info(
+                    `No reminders to display for user ${userId} on date: ${date.format('YYYY-MM-DD')}`
+                );
             } else {
                 const reminderList = reminders
                     .map(reminder =>
-                        Messages.REMINDER_TIME_FORMAT(
+                        MessageEnum.REMINDER_TIME_FORMAT(
                             moment(reminder.time).format('HH:mm'),
                             reminder.message
                         )
                     )
                     .join('\n');
 
-                await ctx.reply(
-                    `${Messages.REMINDER_LIST_HEADER}${reminderList}`,
-                    { parse_mode: 'Markdown' }
-                );
+                const header =
+                    MessageEnum.REMINDER_LIST_SPECIFIC_DAY_HEADER.replace(
+                        '{{date}}',
+                        date.format('YYYY-MM-DD')
+                    );
+                await ctx.reply(`${header}${reminderList}`, {
+                    parse_mode: 'Markdown',
+                });
                 this.logger.info(
-                    `Displayed today's reminders for user ${userId}`
+                    `Displayed reminders for user ${userId} on date: ${date.format('YYYY-MM-DD')}`
                 );
             }
         } catch (error) {
             this.logger.error(
-                `Error displaying today's reminders for user ${userId}: ${error.message}`
+                `Error displaying reminders for user ${userId} on date ${date.format('YYYY-MM-DD')}: ${error.message}`
             );
-            await ctx.reply(Messages.ERROR_FETCHING_REMINDERS);
+            await ctx.reply(MessageEnum.ERROR_FETCHING_REMINDERS);
         }
     }
 }
