@@ -3,9 +3,14 @@ const InvalidReminderTimeError = require('../../infra/errors/invalid_time_remind
 
 class Reminder {
     constructor({ time, message, userId }) {
-        if (!this.validateTime(time)) {
+        if (!this.validateTimeFormat(time)) {
             throw new InvalidReminderTimeError(
                 'Invalid time format for Reminder'
+            );
+        }
+        if (!this.validateTimeIsFuture(time)) {
+            throw new InvalidReminderTimeError(
+                'Reminder time must be in the future'
             );
         }
         if (!message || typeof message !== 'string' || message.trim() === '') {
@@ -22,8 +27,14 @@ class Reminder {
         this._userId = userId;
     }
 
-    validateTime(time) {
+    validateTimeFormat(time) {
         return moment(time, 'YYYY-MM-DD HH:mm', true).isValid();
+    }
+
+    validateTimeIsFuture(time) {
+        const now = moment();
+        const reminderTime = moment(time, 'YYYY-MM-DD HH:mm');
+        return reminderTime.isAfter(now);
     }
 
     getTime() {
