@@ -7,17 +7,21 @@ class StartHandler {
     register() {
         this.bot.start(async ctx => {
             try {
-                await ctx.reply('Welcome! Use /help for available commands.');
+                await ctx.reply(
+                    'Hi there! 👋 Welcome to your personal reminder bot. You can set reminders for specific dates and times.\n\n' +
+                        '📜 *Quick Tip:* Use `/help` to see all available commands and learn how to use them!\n\n' +
+                        'Let’s get started! 😊',
+                    { parse_mode: 'Markdown' }
+                );
                 this.logger.info(
-                    'Start command executed successfully for user:',
-                    ctx.from.id
+                    `Start command executed successfully for user: ${ctx.from.id}`
                 );
             } catch (error) {
                 this.logger.error(
                     `Error executing start command for user ${ctx.from.id}: ${error.message}`
                 );
                 await ctx.reply(
-                    'An error occurred while processing the start command.'
+                    'Oops! Something went wrong while processing the start command. Please try again later.'
                 );
             }
         });
