@@ -6,31 +6,30 @@ const SchedulerService = require('./app/services/scheduler_service');
 const { initializeDatabase } = require('./infra/db/index');
 const ReminderRepository = require('./infra/repository/reminder_repository');
 const BotBuilder = require('./infra/bot/bot_builder');
+const Logger = require('./seedwork/logger');
 
 (async () => {
     try {
         await initializeDatabase();
 
-        const logger = console;
-
         const bot = new Telegraf(settings.telegramToken);
         const reminderRepository = new ReminderRepository();
-        const reminderService = new ReminderService(reminderRepository, logger);
+        const reminderService = new ReminderService(reminderRepository, Logger);
         const schedulerService = new SchedulerService(
             reminderService,
             bot,
-            logger
+            Logger
         );
 
-        const botBuilder = new BotBuilder(bot, reminderService, logger);
+        const botBuilder = new BotBuilder(bot, reminderService, Logger);
         botBuilder.build();
 
         schedulerService.start();
 
         await bot.launch();
-        console.log('Bot successfully launched');
+        Logger.info('Bot successfully launched');
     } catch (error) {
-        console.error('Failed to initialize application:', error.message);
+        Logger.error(`Failed to initialize application: ${error.message}`, { stack: error.stack });
         process.exit(1);
     }
 })();
