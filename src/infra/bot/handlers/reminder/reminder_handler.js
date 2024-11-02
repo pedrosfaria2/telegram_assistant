@@ -1,8 +1,10 @@
 const moment = require('moment');
 const ReminderCreationError = require('../../../errors/reminder_creation_error');
 const InvalidReminderTimeError = require('../../../errors/invalid_time_reminder_time_error');
-const { ErrorMessages, ReminderMessages } = require('../../../enumerators/messages');
-
+const {
+    ErrorMessages,
+    ReminderMessages,
+} = require('../../../enumerators/messages');
 
 class ReminderHandler {
     constructor(bot, reminderService, logger) {

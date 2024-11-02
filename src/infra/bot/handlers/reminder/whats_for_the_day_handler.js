@@ -1,6 +1,9 @@
 const moment = require('moment');
-const { HelpMessages, ReminderMessages, ErrorMessages } = require('../../../enumerators/messages');
-
+const {
+    HelpMessages,
+    ReminderMessages,
+    ErrorMessages,
+} = require('../../../enumerators/messages');
 
 class WhatsForTheDayHandler {
     constructor(bot, reminderService, logger) {
@@ -44,9 +47,12 @@ class WhatsForTheDayHandler {
             );
 
             if (reminders.length === 0) {
-                await ctx.reply(ReminderMessages.NO_REMINDERS_FOR_SPECIFIC_DAY, {
-                    parse_mode: 'Markdown',
-                });
+                await ctx.reply(
+                    ReminderMessages.NO_REMINDERS_FOR_SPECIFIC_DAY,
+                    {
+                        parse_mode: 'Markdown',
+                    }
+                );
                 this.logger.info(
                     `No reminders to display for user ${userId} on date: ${date.format('YYYY-MM-DD')}`
                 );

@@ -1,5 +1,5 @@
 const StartHandler = require('./handlers/reminder/start_handler');
-const HelpHandler = require('./handlers/reminder/help_handler');
+const HelpHandler = require('./handlers/help/help_handler');
 const ReminderHandler = require('./handlers/reminder/reminder_handler');
 const WhatsForTheDayHandler = require('./handlers/reminder/whats_for_the_day_handler');
 const OpenRemindersHandler = require('./handlers/reminder/open_reminds_handler');

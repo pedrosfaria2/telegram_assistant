@@ -2,7 +2,6 @@ const cron = require('node-cron');
 const moment = require('moment-timezone');
 const { ReminderMessages } = require('../../infra/enumerators/messages');
 
-
 class SchedulerService {
     constructor(reminderService, bot, logger) {
         this.reminderService = reminderService;
