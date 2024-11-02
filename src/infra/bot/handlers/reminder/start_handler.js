@@ -1,4 +1,4 @@
-const MessageEnum = require('../../enumerators/messages_enum');
+const { GeneralMessages, ErrorMessages } = require('../../../enumerators/messages');
 
 class StartHandler {
     constructor(bot, logger) {
@@ -9,7 +9,7 @@ class StartHandler {
     register() {
         this.bot.start(async ctx => {
             try {
-                await ctx.reply(MessageEnum.START_WELCOME, {
+                await ctx.reply(GeneralMessages.START_WELCOME, {
                     parse_mode: 'Markdown',
                 });
                 this.logger.info(
@@ -19,7 +19,7 @@ class StartHandler {
                 this.logger.error(
                     `Error executing start command for user ${ctx.from.id}: ${error.message}`
                 );
-                await ctx.reply(MessageEnum.START_ERROR);
+                await ctx.reply(ErrorMessages.START_ERROR);
             }
         });
     }

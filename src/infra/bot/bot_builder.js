@@ -1,8 +1,8 @@
-const StartHandler = require('./handlers/start_handler');
-const HelpHandler = require('./handlers/help_handler');
-const ReminderHandler = require('./handlers/reminder_handler');
-const WhatsForTheDayHandler = require('./handlers/whats_for_the_day_handler');
-const OpenRemindersHandler = require('./handlers/open_reminds_handler');
+const StartHandler = require('./handlers/reminder/start_handler');
+const HelpHandler = require('./handlers/reminder/help_handler');
+const ReminderHandler = require('./handlers/reminder/reminder_handler');
+const WhatsForTheDayHandler = require('./handlers/reminder/whats_for_the_day_handler');
+const OpenRemindersHandler = require('./handlers/reminder/open_reminds_handler');
 
 class BotBuilder {
     constructor(bot, reminderService, logger) {

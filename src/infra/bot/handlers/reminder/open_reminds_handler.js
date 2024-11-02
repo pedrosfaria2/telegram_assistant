@@ -1,5 +1,6 @@
 const moment = require('moment');
-const OpenRemindersMessagesEnum = require('../../enumerators/open_reminders_messages_enum');
+const OpenRemindersMessagesEnum = require('../../../enumerators/messages/open_reminders_messages_enum');
+const { GeneralMessages } = require('../../../enumerators/messages');
 
 class OpenRemindersHandler {
     constructor(bot, reminderService, logger) {
@@ -20,7 +21,7 @@ class OpenRemindersHandler {
                 await this.reminderService.getAllOpenReminders(userId);
 
             if (reminders.length === 0) {
-                await ctx.reply(OpenRemindersMessagesEnum.NO_OPEN_REMINDERS, {
+                await ctx.reply(GeneralMessages.NO_OPEN_REMINDERS, {
                     parse_mode: 'Markdown',
                 });
                 this.logger.info(

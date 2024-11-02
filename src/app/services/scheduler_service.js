@@ -1,6 +1,7 @@
 const cron = require('node-cron');
 const moment = require('moment-timezone');
-const MessageEnum = require('../../infra/enumerators/messages_enum');
+const { ReminderMessages } = require('../../infra/enumerators/messages');
+
 
 class SchedulerService {
     constructor(reminderService, bot, logger) {
@@ -40,7 +41,7 @@ class SchedulerService {
                         );
                         await this.bot.telegram.sendMessage(
                             reminder.userId,
-                            MessageEnum.REMINDER_ALERT.replace(
+                            ReminderMessages.REMINDER_ALERT.replace(
                                 '{{date}}',
                                 moment(reminder.time).format(
                                     'dddd, MMMM Do YYYY, HH:mm'

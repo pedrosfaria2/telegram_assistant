@@ -1,7 +1,8 @@
 const moment = require('moment');
-const ReminderCreationError = require('../../errors/reminder_creation_error');
-const InvalidReminderTimeError = require('../../errors/invalid_time_reminder_time_error');
-const MessageEnum = require('../../enumerators/messages_enum');
+const ReminderCreationError = require('../../../errors/reminder_creation_error');
+const InvalidReminderTimeError = require('../../../errors/invalid_time_reminder_time_error');
+const { ErrorMessages, ReminderMessages } = require('../../../enumerators/messages');
+
 
 class ReminderHandler {
     constructor(bot, reminderService, logger) {
@@ -18,7 +19,7 @@ class ReminderHandler {
         const args = ctx.message.text.split(' ').slice(1);
 
         if (args.length < 3) {
-            return ctx.reply(MessageEnum.REMINDER_USAGE, {
+            return ctx.reply(ErrorMessages.REMINDER_USAGE, {
                 parse_mode: 'Markdown',
             });
         }
@@ -32,7 +33,7 @@ class ReminderHandler {
             this.logger.warn(
                 `Invalid time format for user ${userId}: ${dateTime}`
             );
-            return ctx.reply(MessageEnum.INVALID_TIME_FORMAT, {
+            return ctx.reply(ErrorMessages.INVALID_TIME_FORMAT, {
                 parse_mode: 'Markdown',
             });
         }
@@ -43,7 +44,7 @@ class ReminderHandler {
                 message,
                 userId
             );
-            const formattedMessage = MessageEnum.REMINDER_CREATED.replace(
+            const formattedMessage = ReminderMessages.REMINDER_CREATED.replace(
                 '{{date}}',
                 moment(reminder.getTime()).format('dddd, MMMM Do YYYY, HH:mm')
             ).replace('{{message}}', reminder.getMessage());
@@ -56,19 +57,19 @@ class ReminderHandler {
                 this.logger.error(
                     `Failed to create reminder for user ${userId}: ${error.message}`
                 );
-                ctx.reply(MessageEnum.REMINDER_CREATION_ERROR);
+                ctx.reply(ErrorMessages.REMINDER_CREATION_ERROR);
             } else if (error instanceof InvalidReminderTimeError) {
                 this.logger.warn(
                     `Invalid reminder time for user ${userId}: ${dateTime}`
                 );
-                ctx.reply(MessageEnum.INVALID_REMINDER_TIME, {
+                ctx.reply(ErrorMessages.INVALID_REMINDER_TIME, {
                     parse_mode: 'Markdown',
                 });
             } else {
                 this.logger.error(
                     `Unexpected error for user ${userId}: ${error.message}`
                 );
-                ctx.reply(MessageEnum.UNEXPECTED_ERROR);
+                ctx.reply(ErrorMessages.UNEXPECTED_ERROR);
             }
         }
     }

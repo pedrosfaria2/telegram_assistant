@@ -1,4 +1,4 @@
-const MessageEnum = require('../../enumerators/messages_enum');
+const { HelpMessages } = require('../../../enumerators/messages');
 
 class HelpHandler {
     constructor(bot, logger) {
@@ -10,11 +10,11 @@ class HelpHandler {
         this.bot.help(async ctx => {
             try {
                 const helpMessage =
-                    MessageEnum.HELP_INTRO +
-                    MessageEnum.HELP_REMINDER +
-                    MessageEnum.HELP_WHATS_FOR_THE_DAY +
-                    MessageEnum.HELP_OPEN_REMINDERS +
-                    MessageEnum.HELP_OTHER;
+                    HelpMessages.HELP_INTRO +
+                    HelpMessages.HELP_REMINDER +
+                    HelpMessages.HELP_WHATS_FOR_THE_DAY +
+                    HelpMessages.HELP_OPEN_REMINDERS +
+                    HelpMessages.HELP_OTHER;
 
                 await ctx.reply(helpMessage, { parse_mode: 'Markdown' });
                 this.logger.info('Help command executed successfully');
@@ -22,7 +22,7 @@ class HelpHandler {
                 this.logger.error(
                     `Error executing help command: ${error.message}`
                 );
-                await ctx.reply(MessageEnum.HELP_ERROR);
+                await ctx.reply(HelpMessages.HELP_ERROR);
             }
         });
     }

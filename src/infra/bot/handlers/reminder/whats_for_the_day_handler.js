@@ -1,5 +1,6 @@
 const moment = require('moment');
-const MessageEnum = require('../../enumerators/messages_enum');
+const { HelpMessages, ReminderMessages, ErrorMessages } = require('../../../enumerators/messages');
+
 
 class WhatsForTheDayHandler {
     constructor(bot, reminderService, logger) {
@@ -22,7 +23,7 @@ class WhatsForTheDayHandler {
         } else {
             date = moment(String(args[0]), 'YYYY-MM-DD', true);
             if (!date.isValid()) {
-                await ctx.reply(MessageEnum.WHATS_FOR_SPECIFIC_DAY_USAGE, {
+                await ctx.reply(HelpMessages.WHATS_FOR_SPECIFIC_DAY_USAGE, {
                     parse_mode: 'Markdown',
                 });
                 this.logger.warn(
@@ -43,7 +44,7 @@ class WhatsForTheDayHandler {
             );
 
             if (reminders.length === 0) {
-                await ctx.reply(MessageEnum.NO_REMINDERS_FOR_SPECIFIC_DAY, {
+                await ctx.reply(ReminderMessages.NO_REMINDERS_FOR_SPECIFIC_DAY, {
                     parse_mode: 'Markdown',
                 });
                 this.logger.info(
@@ -52,7 +53,7 @@ class WhatsForTheDayHandler {
             } else {
                 const reminderList = reminders
                     .map(reminder =>
-                        MessageEnum.REMINDER_TIME_FORMAT(
+                        ReminderMessages.REMINDER_TIME_FORMAT(
                             moment(reminder.time).format('HH:mm'),
                             reminder.message
                         )
@@ -60,7 +61,7 @@ class WhatsForTheDayHandler {
                     .join('\n');
 
                 const header =
-                    MessageEnum.REMINDER_LIST_SPECIFIC_DAY_HEADER.replace(
+                    ReminderMessages.REMINDER_LIST_SPECIFIC_DAY_HEADER.replace(
                         '{{date}}',
                         date.format('YYYY-MM-DD')
                     );
@@ -75,7 +76,7 @@ class WhatsForTheDayHandler {
             this.logger.error(
                 `Error displaying reminders for user ${userId} on date ${date.format('YYYY-MM-DD')}: ${error.message}`
             );
-            await ctx.reply(MessageEnum.ERROR_FETCHING_REMINDERS);
+            await ctx.reply(ErrorMessages.ERROR_FETCHING_REMINDERS);
         }
     }
 }
