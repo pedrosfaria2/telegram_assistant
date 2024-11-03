@@ -1,3 +1,8 @@
-TELEGRAM_TOKEN=
-PORT=
-DATABASE_URL=
+TELEGRAM_TOKEN=your_bot_token_here
+PORT=intport
+DATABASE_URL=./telegram_bot.db
+OPENAI_API_KEY=you_open_api_key
+OPENAI_API_URL=https://api.openai.com/v1/chat/completions
+OPENAI_MODEL=the_model_you_want
+OPENAI_MAX_TOKENS=100
+OPENAI_TEMPERATURE=0.5
