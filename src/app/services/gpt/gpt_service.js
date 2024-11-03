@@ -33,7 +33,7 @@ async function callGPT(prompt) {
                 'Unexpected GPT response format:',
                 JSON.stringify(response.data, null, 2)
             );
-            throw new Error('Invalid response structure from GPT');
+            return { error: 'Invalid response structure from GPT' };
         }
 
         const gptContent =
@@ -49,7 +49,7 @@ async function callGPT(prompt) {
                 JSON.stringify(error.response.data, null, 2)
             );
         }
-        throw new Error('Failed to communicate with GPT service');
+        return { error: 'Failed to communicate with GPT service' };
     }
 }
 

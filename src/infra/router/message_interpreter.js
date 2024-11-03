@@ -98,7 +98,7 @@ Message: "${userMessage}"
                 parsedResponse = JSON.parse(content);
             } catch (parseError) {
                 console.error('Failed to parse GPT response:', parseError);
-                throw new Error('Failed to parse GPT response');
+                return { error: 'Failed to parse GPT response' };
             }
 
             const intent = parsedResponse.intent?.toLowerCase();
