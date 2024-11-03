@@ -1,4 +1,5 @@
 const moment = require('moment');
+const chrono = require('chrono-node');
 const ReminderCreationError = require('../../../errors/reminder_creation_error');
 const InvalidReminderTimeError = require('../../../errors/invalid_time_reminder_time_error');
 const {
@@ -19,23 +20,35 @@ class ReminderHandler {
 
     async handleReminder(ctx) {
         const args = ctx.message.text.split(' ').slice(1);
+        const userId = ctx.message.from.id;
 
-        if (args.length < 3) {
+        if (args.length < 2) {
             return ctx.reply(ErrorMessages.REMINDER_USAGE, {
                 parse_mode: 'Markdown',
             });
         }
 
-        const [date, time, ...messageParts] = args;
-        const dateTime = `${date} ${time}`;
-        const message = messageParts.join(' ');
-        const userId = ctx.message.from.id;
+        const inputText = args.join(' ');
 
-        if (!moment(dateTime, 'YYYY-MM-DD HH:mm', true).isValid()) {
+        const parsedResults = chrono.parse(inputText);
+
+        if (parsedResults.length === 0) {
             this.logger.warn(
-                `Invalid time format for user ${userId}: ${dateTime}`
+                `Invalid time format for user ${userId}: ${inputText}`
             );
             return ctx.reply(ErrorMessages.INVALID_TIME_FORMAT, {
+                parse_mode: 'Markdown',
+            });
+        }
+
+        const parsedDate = parsedResults[0].start.date();
+        const dateTime = moment(parsedDate).format('YYYY-MM-DD HH:mm');
+
+        const dateTimeText = parsedResults[0].text;
+        const message = inputText.replace(dateTimeText, '').trim();
+
+        if (!message) {
+            return ctx.reply(ErrorMessages.REMINDER_USAGE, {
                 parse_mode: 'Markdown',
             });
         }

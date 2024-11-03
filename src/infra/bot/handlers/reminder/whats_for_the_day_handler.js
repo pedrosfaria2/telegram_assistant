@@ -1,4 +1,5 @@
 const moment = require('moment');
+const chrono = require('chrono-node');
 const {
     HelpMessages,
     ReminderMessages,
@@ -21,23 +22,26 @@ class WhatsForTheDayHandler {
         const userId = ctx.message.from.id;
         let date;
 
-        if (args.length === 0 || !args[0]) {
+        if (args.length === 0) {
             date = moment();
         } else {
-            date = moment(String(args[0]), 'YYYY-MM-DD', true);
-            if (!date.isValid()) {
+            const dateString = args.join(' ');
+            const parsedDate = chrono.parseDate(dateString);
+            if (parsedDate) {
+                date = moment(parsedDate);
+            } else {
                 await ctx.reply(HelpMessages.WHATS_FOR_SPECIFIC_DAY_USAGE, {
                     parse_mode: 'Markdown',
                 });
                 this.logger.warn(
-                    `Invalid date format provided by user ${userId}: ${args[0]}`
+                    `Invalid date format provided by user ${userId}: ${dateString}`
                 );
                 return;
             }
         }
 
-        const startOfDay = date.startOf('day').toISOString();
-        const endOfDay = date.endOf('day').toISOString();
+        const startOfDay = date.clone().startOf('day').toISOString();
+        const endOfDay = date.clone().endOf('day').toISOString();
 
         try {
             const reminders = await this.reminderService.getIntervalReminders(
@@ -69,7 +73,7 @@ class WhatsForTheDayHandler {
                 const header =
                     ReminderMessages.REMINDER_LIST_SPECIFIC_DAY_HEADER.replace(
                         '{{date}}',
-                        date.format('YYYY-MM-DD')
+                        date.format('dddd, MMMM Do YYYY')
                     );
                 await ctx.reply(`${header}${reminderList}`, {
                     parse_mode: 'Markdown',
