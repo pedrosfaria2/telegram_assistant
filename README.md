@@ -4,7 +4,7 @@ This project is a personal assistant Telegram bot that assists users by providin
 
 ## Project Overview
 
-The main purpose of this project is to deliver an interactive personal assistant using the Telegram API, with the primary feature being a reminder bot. Users can set reminders for specific dates and times, and the bot will send timely notifications via Telegram. The project leverages Domain-Driven Design (DDD) principles, which ensure a clear and organized code structure that is scalable and easy to maintain.
+The main purpose of this project is to deliver an interactive personal assistant using the Telegram API, with the primary features being reminder management and shopping list management. Users can set reminders for specific dates and times, and manage shopping lists conveniently through the bot. The project leverages Domain-Driven Design (DDD) principles, which ensure a clear and organized code structure that is scalable and easy to maintain.
 
 ## Key Technologies
 
@@ -34,9 +34,16 @@ DATABASE_URL=./reminders.db
 
 ### Current Features
 
--   **Reminder**: Users can set reminders for specific dates and times using the `/reminder` command.
--   **What's for the day**: Users can see their agenda for the current or specific day using `/whats_the_day` command.
--   **Upcoming Calendar**: Users can see their upcoming reminders using `/open_reminders` command.
+-   **Reminder Management**:
+    -   **Set Reminder**: Users can set reminders for specific dates and times using the `/reminder` command.
+    -   **View Agenda**: Users can see their agenda for the current or specific day using `/whats_the_day` command.
+    -   **Upcoming Reminders**: Users can see their upcoming reminders using `/open_reminders` command.
+-   **Shopping List Management**:
+    -   **Add Item**: Users can add an item to their shopping list using `/add_item` command.
+    -   **Remove Item**: Users can remove an item from their shopping list using `/remove_item` command.
+    -   **List Items**: Users can view all items in their shopping list using `/list_items` command. Items are displayed along with their status (purchased or not).
+    -   **Mark as Purchased**: Users can mark an item as purchased using `/mark_purchased` command.
+    -   **Unmark as Purchased**: Users can unmark an item as purchased using `/unmark_purchased` command.
 
 ### Planned Features
 

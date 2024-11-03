@@ -1,6 +1,6 @@
 const GeneralMessages = Object.freeze({
     START_WELCOME:
-        'Hi there! 👋 Welcome to your personal reminder bot. You can set reminders for specific dates and times.\n\n' +
+        'Hi there! 👋 Welcome to your personal assistant bot. You can set reminders for specific dates and times.\n\n' +
         '📜 *Quick Tip:* Use `/help` to see all available commands and learn how to use them!\n\n' +
         'Let’s get started! 😊',
     NO_OPEN_REMINDERS:
