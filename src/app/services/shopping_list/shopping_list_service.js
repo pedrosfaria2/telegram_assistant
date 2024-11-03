@@ -49,6 +49,35 @@ class ShoppingListService {
         }
     }
 
+    async bulkRemoveItems(userId, itemIds = []) {
+        try {
+            const removed = await this.shoppingListRepository.bulkRemove(
+                Number(userId),
+                itemIds
+            );
+
+            if (!removed) {
+                this.logger.warn(
+                    `No items found for bulk removal for user ${userId}`
+                );
+                return false;
+            }
+
+            const action = itemIds.length
+                ? `IDs: ${itemIds.join(', ')}`
+                : 'all items';
+            this.logger.info(
+                `Removed ${action} from shopping list for user ${userId}`
+            );
+            return true;
+        } catch (error) {
+            this.logger.error(
+                `Failed to perform bulk removal for user ${userId}: ${error.message}`
+            );
+            throw error;
+        }
+    }
+
     async listAllItems(userId) {
         try {
             const items = await this.shoppingListRepository.listItems(

@@ -11,6 +11,10 @@ const ShoppingListMessages = Object.freeze({
         '🔄 Successfully unmarked item with ID *{{itemId}}* as purchased.',
     ITEM_PURCHASED: '✅ Purchased',
     ITEM_NOT_PURCHASED: '❌ Not purchased',
+    ITEMS_REMOVED:
+        'Success! I removed {{itemCount}} items from your shopping list.',
+    ALL_ITEMS_REMOVED:
+        'Poof! All items have been removed from your shopping list. All clear!',
 });
 
 module.exports = ShoppingListMessages;

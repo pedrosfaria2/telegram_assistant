@@ -27,8 +27,14 @@ const ErrorMessages = Object.freeze({
         'There was an issue adding the item to your shopping list. Please try again later.',
     ITEM_NOT_FOUND:
         'The requested item could not be found in your shopping list. Please check the ID and try again.',
+    SHOPPING_LIST_BULK_REMOVE_USAGE:
+        "Hmm, I didn't catch which items to remove. You can either specify item IDs like this: `/bulk_remove <item_id1> <item_id2> ...`, or remove everything by typing `/bulk_remove all`.",
     INVALID_ITEM_ID:
-        'The item ID provided is not valid. Please use a numeric ID and try again.',
+        'Uh-oh! That item ID doesn’t look right. Please provide a valid number.',
+    INVALID_ITEM_IDS:
+        "Oops! Some of those IDs look off. Make sure they're numbers separated by spaces.",
+    NO_ITEMS_FOUND:
+        'Looks like there’s nothing to remove with those IDs. Double-check and try again!',
 });
 
 module.exports = ErrorMessages;

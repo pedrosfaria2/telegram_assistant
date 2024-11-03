@@ -71,6 +71,34 @@ class ShoppingListRepository {
         }
     }
 
+    async bulkRemove(userId, itemIds = []) {
+        try {
+            const whereClause = { userId };
+            if (itemIds.length > 0) {
+                whereClause.id = itemIds;
+            }
+
+            const deletedCount = await ShoppingList.destroy({
+                where: whereClause,
+            });
+
+            if (deletedCount === 0) {
+                console.warn(`No items found for removal`);
+                return false;
+            }
+
+            console.info(
+                `Items successfully deleted. Removed ${deletedCount} items.`
+            );
+            return true;
+        } catch (error) {
+            console.error(
+                `Failed to remove shopping list items: ${error.message}`
+            );
+            return false;
+        }
+    }
+
     async update(shoppingListItem) {
         try {
             const updateData = {

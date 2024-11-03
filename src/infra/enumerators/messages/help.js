@@ -44,6 +44,8 @@ const HelpMessages = Object.freeze({
     HELP_UNKNOWN_TOPIC:
         "❓ *Sorry, I don't have help information about that topic.*\n\n" +
         '🔍 *Please check the available commands with `/help` or ask for assistance!* 😊',
+    HELP_SHOPPING_LIST_BULK_REMOVE:
+        '🚮 *Bulk Remove Items:* Use `/bulk_remove <item_id1> <item_id2> ...` to remove multiple items by ID, or `/bulk_remove all` to clear your entire list.\n\n',
 });
 
 module.exports = HelpMessages;
