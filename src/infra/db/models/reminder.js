@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const { sequelize } = require('../index');
+const sequelize = require('../../db/db');
 
 const Reminder = sequelize.define(
     'Reminder',
@@ -18,7 +18,7 @@ const Reminder = sequelize.define(
         },
     },
     {
-        tableName: 'reminders',
+        tableName: 'Reminders',
         timestamps: false,
     }
 );

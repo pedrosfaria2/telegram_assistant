@@ -1,7 +1,7 @@
 const {
     GeneralMessages,
     ErrorMessages,
-} = require('../../../enumerators/messages');
+} = require('../../enumerators/messages');
 
 class StartHandler {
     constructor(bot, logger) {

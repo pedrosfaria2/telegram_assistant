@@ -11,6 +11,26 @@ const HelpMessages = Object.freeze({
         '📅 *To view all open reminders:*\n' +
         '`/open_reminders`\n' +
         'This will show a list of all your upcoming reminders, organized by date.\n\n',
+    HELP_SHOPPING_LIST_ADD:
+        '🛒 *To add an item to your shopping list:*\n' +
+        '`/add_item [item name]`\n' +
+        'For example: `/add_item Milk`\n\n',
+    HELP_SHOPPING_LIST_REMOVE:
+        '🗑️ *To remove an item from your shopping list:*\n' +
+        '`/remove_item [item ID]`\n' +
+        'For example: `/remove_item 3`\n\n',
+    HELP_SHOPPING_LIST_LIST:
+        '📋 *To view all items in your shopping list:*\n' +
+        '`/list_items`\n' +
+        'This will show all items you have added to your shopping list.\n\n',
+    HELP_SHOPPING_LIST_MARK:
+        '✅ *To mark an item as purchased:*\n' +
+        '`/mark_purchased [item ID]`\n' +
+        'For example: `/mark_purchased 5`\n\n',
+    HELP_SHOPPING_LIST_UNMARK:
+        '🔄 *To unmark an item as purchased:*\n' +
+        '`/unmark_purchased [item ID]`\n' +
+        'For example: `/unmark_purchased 5`\n\n',
     HELP_OTHER:
         'If you need more assistance, feel free to ask! 😊\n\n' +
         '⚙️ *More useful commands coming soon!*',

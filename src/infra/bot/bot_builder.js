@@ -1,13 +1,15 @@
-const StartHandler = require('./handlers/reminder/start_handler');
+const StartHandler = require('./handlers/start_handler');
 const HelpHandler = require('./handlers/help/help_handler');
 const ReminderHandler = require('./handlers/reminder/reminder_handler');
 const WhatsForTheDayHandler = require('./handlers/reminder/whats_for_the_day_handler');
 const OpenRemindersHandler = require('./handlers/reminder/open_reminds_handler');
+const ShoppingListHandler = require('./handlers/shopping_list/shopping_list_handler');
 
 class BotBuilder {
-    constructor(bot, reminderService, logger) {
+    constructor(bot, reminderService, shoppingListService, logger) {
         this.bot = bot;
         this.reminderService = reminderService;
+        this.shoppingListService = shoppingListService;
         this.logger = logger;
     }
 
@@ -26,6 +28,11 @@ class BotBuilder {
             new OpenRemindersHandler(
                 this.bot,
                 this.reminderService,
+                this.logger
+            ),
+            new ShoppingListHandler(
+                this.bot,
+                this.shoppingListService,
                 this.logger
             ),
         ];

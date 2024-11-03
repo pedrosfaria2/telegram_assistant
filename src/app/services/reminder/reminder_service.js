@@ -1,6 +1,6 @@
-const Reminder = require('../../domain/entities/reminder');
-const ReminderCreationError = require('../../infra/errors/reminder_creation_error');
-const ReminderNotFoundError = require('../../infra/errors/reminder_not_found_error');
+const Reminder = require('../../../domain/entities/reminder');
+const ReminderCreationError = require('../../../infra/errors/reminder_creation_error');
+const ReminderNotFoundError = require('../../../infra/errors/reminder_not_found_error');
 
 class ReminderService {
     constructor(reminderRepository, logger) {

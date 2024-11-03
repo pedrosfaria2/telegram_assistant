@@ -1,5 +1,6 @@
 const { HelpMessages } = require('../../../enumerators/messages');
 const getRemindersHelp = require('./help_reminder');
+const getShoppingListHelp = require('./help_shopping_list');
 
 class HelpHandler {
     constructor(bot, logger) {
@@ -7,6 +8,7 @@ class HelpHandler {
         this.logger = logger;
         this.helpTopics = {
             reminders: getRemindersHelp,
+            shoppinglist: getShoppingListHelp,
         };
     }
 
@@ -50,6 +52,7 @@ class HelpHandler {
     getTopicDescription(topic) {
         const descriptions = {
             reminders: 'Help about reminders',
+            shoppinglist: 'Help about managing your shopping list',
         };
         return descriptions[topic] || 'Help about this topic';
     }

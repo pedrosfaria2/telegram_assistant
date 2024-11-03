@@ -1,12 +1,8 @@
-const { Sequelize } = require('sequelize');
-const settings = require('../../settings');
+const sequelize = require('./db');
 const Logger = require('../../seedwork/logger');
 
-const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: settings.databaseUrl,
-    logging: msg => console.info(msg),
-});
+require('./models/reminder');
+require('./models/shopping_list');
 
 async function initializeDatabase() {
     try {
@@ -21,4 +17,7 @@ async function initializeDatabase() {
     }
 }
 
-module.exports = { sequelize, initializeDatabase };
+module.exports = {
+    sequelize,
+    initializeDatabase,
+};
