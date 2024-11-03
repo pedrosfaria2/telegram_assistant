@@ -136,12 +136,27 @@ class ShoppingListHandler {
             }
 
             const itemList = items
-                .map(item => `- ${item.getItem()} (ID: ${item.getId()})`)
+                .map((item, index) =>
+                    ShoppingListMessages.ITEM_LIST_FORMAT.replace(
+                        '{{index}}',
+                        index + 1
+                    )
+                        .replace('{{item}}', item.getItem())
+                        .replace('{{itemId}}', item.getId())
+                        .replace(
+                            '{{status}}',
+                            item.isPurchased()
+                                ? ShoppingListMessages.ITEM_PURCHASED
+                                : ShoppingListMessages.ITEM_NOT_PURCHASED
+                        )
+                )
                 .join('\n');
-            ctx.reply(
-                ShoppingListMessages.ITEM_LIST.replace('{{items}}', itemList),
-                { parse_mode: 'Markdown' }
+
+            const message = ShoppingListMessages.ITEM_LIST.replace(
+                '{{items}}',
+                itemList
             );
+            ctx.reply(message, { parse_mode: 'Markdown' });
             this.logger.info(`Listed ${items.length} items for user ${userId}`);
         } catch (error) {
             this.logger.error(
