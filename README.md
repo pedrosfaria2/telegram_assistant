@@ -44,7 +44,7 @@ DATABASE_URL=./reminders.db
     -   **List Items**: Users can view all items in their shopping list using `/list_items` command. Items are displayed along with their status (purchased or not).
     -   **Mark as Purchased**: Users can mark an item as purchased using `/mark_purchased` command.
     -   **Unmark as Purchased**: Users can unmark an item as purchased using `/unmark_purchased` command.
-      - **Bulk remove**: Users can remove multiple items using `/bulk_remove` command.
+    -   **Bulk remove**: Users can remove multiple items using `/bulk_remove` command.
 
 ### Planned Features
 

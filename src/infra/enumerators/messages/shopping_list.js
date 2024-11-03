@@ -1,20 +1,20 @@
 const ShoppingListMessages = Object.freeze({
-    ITEM_ADDED: '🛒 Successfully added *{{item}}* to your shopping list!',
+    ITEM_ADDED: '🛒 Yay! *{{item}}* has been added to your shopping list! 🎉',
     ITEM_REMOVED:
-        '🗑️ Successfully removed item with ID *{{itemId}}* from your shopping list.',
-    NO_ITEMS: 'Your shopping list is empty! Add some items to get started. 😊',
-    ITEM_LIST: '📝 Here are the items in your shopping list:\n\n{{items}}',
+        '🗑️ Item with ID *{{itemId}}* has been removed from your shopping list. Bye-bye, clutter! 🧹',
+    NO_ITEMS: 'Your shopping list is empty! Time to add some goodies! 😊',
+    ITEM_LIST: '📝 Here are the treasures in your shopping list:\n\n{{items}}',
     ITEM_LIST_FORMAT: '{{index}}. *{{item}}* (ID: {{itemId}}) - {{status}}',
     ITEM_MARKED:
-        '✅ Successfully marked item with ID *{{itemId}}* as purchased.',
+        '✅ Great! Item with ID *{{itemId}}* has been marked as purchased. 🛍️',
     ITEM_UNMARKED:
-        '🔄 Successfully unmarked item with ID *{{itemId}}* as purchased.',
+        '🔄 Item with ID *{{itemId}}* is back on the list as "not purchased." Ready for the next trip! 🚶‍♂️',
     ITEM_PURCHASED: '✅ Purchased',
     ITEM_NOT_PURCHASED: '❌ Not purchased',
     ITEMS_REMOVED:
-        'Success! I removed {{itemCount}} items from your shopping list.',
+        'Success! I’ve cleared out *{{itemCount}}* items from your list. Nice and tidy! ✨',
     ALL_ITEMS_REMOVED:
-        'Poof! All items have been removed from your shopping list. All clear!',
+        '🎉 All set! Your shopping list is completely clear. Fresh start! 🧼',
 });
 
 module.exports = ShoppingListMessages;
